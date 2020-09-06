@@ -1,17 +1,20 @@
+.container {
+  display: flex;
+}
+
+
 .grid {
-  background-color: pink;
+  width: 200px;
+  height: 400px;
   display: flex;
   flex-wrap: wrap;
-  height: 400px;
-  width: 200px;
+  background-color: pink;
 }
 
 .grid div {
-
   height: 20px;
   width: 20px;
 }
-
 
 .tetromino {
   background-color: black;
@@ -19,12 +22,12 @@
 
 
 .mini-grid {
-  background-color: pink;
-  display: flex;
-  flex-wrap: wrap;
-  height: 80px;
   margin-left: 50px;
   width: 80px;
+  height: 80px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: pink;
 }
 
 .mini-grid div {
