@@ -48,15 +48,17 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentPosition = 4
   let currentRotation = 0
 
+  console.log(theTetrominoes[0][0])
+
   //randomly select a tetromino
   let random = Math.floor(Math.random()*theTetrominoes.length)
 
-  let current = theTetrominoes[random][0]
 
   //draw the tetromino
   function draw() {
     current.forEach(index => {
       squares[currentPosition + index].classList.add('tetromino')
+      squares[currentPosition + index].style.backgroundColor = colors[random]
     })
 
   }
@@ -65,12 +67,28 @@ document.addEventListener('DOMContentLoaded', () => {
   function undraw() {
     current.forEach(index => {
       squares[currentPosition + index].classList.remove('tetromino')
+      squares[currentPosition + index].style.backgroundColor = ''
+
     })
   }
 
 
 //makethe tetromino move down every second
 timerId = setInterval(moveDown, 500)
+
+//assign functions to keyCodes
+function control(e) {
+  if(e.keyCode === 37) {
+    moveLeft()
+  } else if (e.keyCode === 38) {
+    rotate()
+  } else if (e.keyCode === 39) {
+    moveRight()
+  } else if (e.keyCode === 40) {
+    moveDown()
+    }
+  }
+document.addEventListener('keyup', control)
 
 //move down function
 function moveDown() {
@@ -84,13 +102,39 @@ function moveDown() {
 //freeze function
 function freeze() {
 if(current.some(index => squares[currentPosition + index + width].classList.contains('taken'))) {
-  current.forEach(index => squares[current.Position + index].classList.add('taken'))
+  current.forEach(index => squares[currentPosition + index].classList.add('taken'))
   //start a new tetromino falling
-  random = nextRandom
-  nextRandom = Math.floor(Math.random() * theTetrominoes.length)
+  random = Math.floor(Math.random() * theTetrominoes.length)
   current = theTetrominoes[random][currentRotation]
   currentPosition = 4
+  draw()
  }
+}//move the tetromino left, unless it is at the edge or if there is a blockage
+function moveLeft() {
+  undraw()
+  const isAtLeftEdge = current.some(index => (currentPosition + index) % width === 0)
+
+  if(!isAtLeftEdge) currentPosition -=1
+
+  if(current.some(index => squares[currentPosition + index].classlist.contains('taken'))) {
+  currentPosition +=1
+}
+
+draw()
+
+//move the tetromino right, uneless is at the edge of there is a blockage
+function moveRight() {
+undraw()
+const isAtRightEdge = current.some(index => (currentPosition + index) %width === width -1)
+
+if(!isAtRightEdge) currentPosition +=1
+
+if(current.some(index => squares[currentPosition + index].classList.contains('taken'))) {
+  currentPosition =-1
+}
+
+draw()
+
 }
 
 
@@ -98,16 +142,7 @@ if(current.some(index => squares[currentPosition + index + width].classList.cont
 
 
 
-
-
   console.log(theTetrominoes)
-
-
-
-
-
-
-
 
 
 
