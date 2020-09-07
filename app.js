@@ -1,23 +1,37 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const grid = document.querySelector('.grid')
+  const grid = document.querySelector('.grid') //js knows that anytime we type grid that we want it applied to all of them
   let squares = Array.from(document.querySelectorAll('.grid div'))
-  const scoreDisplay = document.querySelector('#score')
-  const startBtn = document.querySelector('#start-button')
-  const width = 10
-  let nextRandom = 0
-  let timerId
-  let score = 0
-  const colors = [
+  const scoreDisplay = document.querySelector('#score')//display won't change
+  const startBtn = document.querySelector('#start-button')//won't change //#indicates
+  const width = 10 //won't change
+  let nextRandom = 0 //will change
+  let timerId //will change
+  let score = 0 //will change
+  const colors = [  //won't change from those colors
     'gainsboro',
     'lightSeaGreen',
     'deepPink',
     'blueVoilet',
     'Aquamarine'
-
   ]
 
-  //The Tetrominoes
-  const lTetromino = [
+  //querySelector: inbuild js method. it searches through document for whatever is assigned to it ('')
+  //querySelectorAll: collects all divs inside grid, then uses array.from to collect all divs in grid
+  //and turns them into an array with a specific index number
+
+console.log(squares)
+
+    //Ids are unique and can only be used once. Classes can be used multiple times on a single element,
+    //or a single class can be used on multiple elements.
+
+    //you can store values in variables. they're identifiers. when you declare a variable it must be unique.
+    //have two kinds of scope: global and function (it can only be used inside function)
+    //var: variables that are not limited in scope (global)
+    //let: allows you to declare variables that are limited to a scope of a block statement
+    //const: cannot access if it's inside a function - cannot change it later on
+    //The Tetrominoes
+
+  const lTetromino = [ //this is const variable with a given value of this array of arrays. each line is one position of the tetromino
     [1, width+1, width*2+1, 2],
     [width, width+1, width+2, width*2+2],
     [1, width+1, width*2+1, width*2],
@@ -52,22 +66,26 @@ document.addEventListener('DOMContentLoaded', () => {
     [width,width+1,width+2,width+3]
   ]
 
+//Arrays: a variable that can hold more than one value at one time. (rather than single constants for example)
+//can hold many values under a single name and you can access values by referring to an index number
+//
+  const theTetrominoes = [lTetromino, zTetromino, tTetromino, oTetromino, iTetromino] // this variable has the value of the "condensed" tetrimino arrays
+  // so they'll be have as a group when referenced
 
-  const theTetrominoes = [lTetromino, zTetromino, tTetromino, oTetromino, iTetromino]
-
-  let currentPosition = 4
+  let currentPosition = 4 // this variable says that the tetromino will begin at position 4 on the grid
   let currentRotation = 0
 
   console.log(theTetrominoes[0][0])
 
   //randomly select a Tetromino and its first rotation
-  let random = Math.floor(Math.random()*theTetrominoes.length)
+  let random = Math.floor(Math.random()*theTetrominoes.length)// built in fuction of js that does math to get random number. here it's assigned to
   let current = theTetrominoes[random][currentRotation]
 
-  //draw the Tetromino
+  //draw the Tetromino - draw and forEach functions invoked and applied to the index (0-99) of
   function draw() {
-    current.forEach(index => {
-      squares[currentPosition + index].classList.add('tetromino')
+    current.forEach(index => { //forEach says that the function will be called once for each element in an array
+      squares[currentPosition + index].classList.add('tetromino') //classList accesses the elements list of classes connected to it
+      //a class is an identifier of an element (like Id, but not unique)
       squares[currentPosition + index].style.backgroundColor = colors[random]
     })
   }
