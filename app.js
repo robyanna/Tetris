@@ -102,7 +102,7 @@ function moveDown() {
 //freeze function
 function freeze() {
 if(current.some(index => squares[currentPosition + index + width].classList.contains('taken'))) {
-  current.forEach(index => squares[currentPosition + index].classList.add('taken'))
+  current.forEach(index => squares[currentPosition + index].classList.add('taken')))
   //start a new tetromino falling
   random = nextRandom
   nextRandom = Math.floor(Math.random() * theTetrominoes.length)
