@@ -12,7 +12,8 @@ document.addEventListener('DOMContentLoaded', () => { //addEventListener is an e
     'lightSeaGreen',
     'deepPink',
     'blueVoilet',
-    'Aquamarine'
+    'Aquamarine',
+    'white'
   ]
 
   //querySelector: inbuild js method. it searches through document for whatever is assigned to it ('')
@@ -66,10 +67,17 @@ console.log(squares)
     [width,width+1,width+2,width+3]
   ]
 
+const xTetromino = [
+[width, width+1, width*2+1, width*2+2],
+[1, width, width+1, width*2],
+[width, width+1, width*2+1, width*2+2],
+[1, width, width+1, width*2]
+]
+
 //Arrays: a variable that can hold more than one value at one time. (rather than single constants for example)
 //can hold many values under a single name and you can access values by referring to an index number
 //
-  const theTetrominoes = [lTetromino, zTetromino, tTetromino, oTetromino, iTetromino] // this variable has the value of the "condensed" tetrimino arrays
+  const theTetrominoes = [lTetromino, zTetromino, tTetromino, oTetromino, iTetromino, xTetromino] // this variable has the value of the "condensed" tetrimino arrays
   // so they'll be have as a group when referenced
 
   let currentPosition = 4 // this variable says that the tetromino will begin at position 4 on the grid
@@ -228,8 +236,8 @@ console.log(squares)
     [0, displayWidth, displayWidth+1, displayWidth*2+1], //zTetromino
     [1, displayWidth, displayWidth+1, displayWidth+2], //tTetromino
     [0, 1, displayWidth, displayWidth+1], //oTetromino
-    [1, displayWidth+1, displayWidth*2+1, displayWidth*3+1] //iTetromino
-
+    [1, displayWidth+1, displayWidth*2+1, displayWidth*3+1], //iTetromino
+    [displayWidth, displayWidth+1, displayWidth*2+1, displayWidth*2+2] //xTetromino
   ]
 
   //display the shape in the mini-grid display
@@ -271,7 +279,7 @@ console.log(squares)
         scoreDisplay.innerHTML = score
         row.forEach(index => {
           squares[index].classList.remove('taken')
-          squares[index].classList.remove('tetromino')//pulls the tetrominos off the top after beign re-added
+          squares[index].classList.remove('tetromino')//pulls the tetrominos off the top after being re-added
           squares[index].style.backgroundColor = ''
         })
         const squaresRemoved = squares.splice(i, width) //mutates an array - in this case, taking out a row
@@ -282,7 +290,7 @@ console.log(squares)
     }
   }
 //splice = remove or add to array
-//splice = attaches to array and lists index nuber of items to remove (1 = remove, 0 = don't remove)
+//splice = attaches to array and lists index nuber of items to remove
 //
   //game over
   function gameOver() {
