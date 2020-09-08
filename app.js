@@ -12,7 +12,8 @@ document.addEventListener('DOMContentLoaded', () => { //addEventListener is an e
     'lightSeaGreen',
     'deepPink',
     'blueVoilet',
-    'Aquamarine'
+    'Aquamarine',
+    'white'
   ]
 
   //querySelector: inbuild js method. it searches through document for whatever is assigned to it ('')
@@ -278,7 +279,7 @@ const xTetromino = [
         scoreDisplay.innerHTML = score
         row.forEach(index => {
           squares[index].classList.remove('taken')
-          squares[index].classList.remove('tetromino')//pulls the tetrominos off the top after beign re-added
+          squares[index].classList.remove('tetromino')//pulls the tetrominos off the top after being re-added
           squares[index].style.backgroundColor = ''
         })
         const squaresRemoved = squares.splice(i, width) //mutates an array - in this case, taking out a row
@@ -289,7 +290,7 @@ const xTetromino = [
     }
   }
 //splice = remove or add to array
-//splice = attaches to array and lists index nuber of items to remove (1 = remove, 0 = don't remove)
+//splice = attaches to array and lists index nuber of items to remove
 //
   //game over
   function gameOver() {
