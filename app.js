@@ -1,8 +1,8 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => { //addEventListener is an event target method
   const grid = document.querySelector('.grid') //js knows that anytime we type grid that we want it applied to all of them
   let squares = Array.from(document.querySelectorAll('.grid div'))
   const scoreDisplay = document.querySelector('#score')//display won't change
-  const startBtn = document.querySelector('#start-button')//won't change //#indicates
+  const startBtn = document.querySelector('#start-button')//won't change //#indicates that we are looking for an Id
   const width = 10 //won't change
   let nextRandom = 0 //will change
   let timerId //will change
@@ -81,6 +81,10 @@ console.log(squares)
   let random = Math.floor(Math.random()*theTetrominoes.length)// built in fuction of js that does math to get random number. here it's assigned to
   let current = theTetrominoes[random][currentRotation]
 
+//math.random = will give random number
+//length = inbuilt method that will give array length
+//math.floor = will round down to the nearest integer
+
   //draw the Tetromino - draw and forEach functions invoked and applied to the index (0-99) of
   function draw() {
     current.forEach(index => { //forEach says that the function will be called once for each element in an array
@@ -88,8 +92,11 @@ console.log(squares)
       //a class is an identifier of an element (like Id, but not unique)
       squares[currentPosition + index].style.backgroundColor = colors[random]
     })
-  }
+  } //arrow function => = shorter function synrax
 
+  //forEach = causes a provided callback function once for each element in an array in ascending order. The callback is invoked for (value, index, object)
+
+//classList.add =
   //undraw the Tetromino
   function undraw() {
     current.forEach(index => {
@@ -99,9 +106,10 @@ console.log(squares)
     })
   }
 
-  //assign functions to keyCodes
+  //assign functions to keyCodes. keyCodes are numerical assignments to keys that can then be assigned to a function
   function control(e) {
-    if(e.keyCode === 37) {
+    if(e.keyCode === 37) { // here keyCode 37 is the moveLeft function. This reads if the left arrow is released, the
+      //tetrimono will move left
       moveLeft()
     } else if (e.keyCode === 38) {
       rotate()
@@ -111,12 +119,16 @@ console.log(squares)
       moveDown()
     }
   }
-  document.addEventListener('keyup', control)
+  document.addEventListener('keyup', control) //this addEventListener is listenint for the up event (release of the key)
+  //to work
 
   //move down function
   function moveDown() {
     undraw()
-    currentPosition += width
+    currentPosition += width // this means that after the tetromino is undrawn, it will be set to draw again
+    //at a position equal to where it is + the width of a square
+
+    //the full length version would be currentPosition = current position + width
     draw()
     freeze()
   }
@@ -125,6 +137,8 @@ console.log(squares)
   function freeze() {
     if(current.some(index => squares[currentPosition + index + width].classList.contains('taken'))) {
       current.forEach(index => squares[currentPosition + index].classList.add('taken'))
+      //if some of the tetrominos pass through a square with a taken position (current position + width), game will freeze
+      //then they all become "taken" game freezes
       //start a new tetromino falling
       random = nextRandom
       nextRandom = Math.floor(Math.random() * theTetrominoes.length)
@@ -151,11 +165,12 @@ console.log(squares)
   //move the tetromino right, unless is at the edge or there is a blockage
   function moveRight() {
     undraw()
-    const isAtRightEdge = current.some(index => (currentPosition + index) % width === width -1)
+    const isAtRightEdge = current.some(index => (currentPosition + index) % width === width -1)//defined left edge (some is a method that looks at each item in an array and checks that it's true for at least one item)
+    //the math above returns 0 basically and stops shape from falling off left edge
     if(!isAtRightEdge) currentPosition +=1
     if(current.some(index => squares[currentPosition + index].classList.contains('taken'))) {
       currentPosition -=1
-    }
+    } // this stops the tetromino and moves it back a space (without redrawing) so it seems not to have moved
     draw()
   }
 
@@ -188,8 +203,9 @@ console.log(squares)
   //rotate the tetromino
   function rotate() {
     undraw()
-    currentRotation ++
-    if(currentRotation === current.length) { //if the current rotation gets to 4, make it go back to 0
+    currentRotation ++ //goes to next item in array
+    if(currentRotation === current.length) { //if currentRotation is deeply = to the amount of rotations in our current tetromino shape,
+      // then we go back to first item in our array
       currentRotation = 0
     }
     current = theTetrominoes[random][currentRotation]
@@ -236,7 +252,7 @@ console.log(squares)
       timerId = null
     } else {
       draw()
-      timerId = setInterval(moveDown, 1000)
+      timerId = setInterval(moveDown, 1000) // one second
       nextRandom = Math.floor(Math.random()*theTetrominoes.length)
       displayShape()
     }
@@ -244,24 +260,30 @@ console.log(squares)
 
   //add score
   function addScore() {
-    for (let i = 0; i < 199; i +=width) {
+    for (let i = 0; i < 199; i +=width) { //the condition for the loop to run
       const row = [i, i+1, i+2, i+3, i+4, i+5, i+6, i+7, i+8, i+9]
+      //for = setting variable before loop starts, defining condition to run and implementing value by 1
 
-      if(row.every(index => squares[index].classList.contains('taken'))) {
+      if(row.every(index => squares[index].classList.contains('taken'))) { //if every square in our defined row
+        //contains a div in the class of taken. If it does, we add 10 to the score, then add the score to display (innerHTML),
+        //then remove the squares with the class of ('taken')
         score +=10
         scoreDisplay.innerHTML = score
         row.forEach(index => {
           squares[index].classList.remove('taken')
-          squares[index].classList.remove('tetromino')
+          squares[index].classList.remove('tetromino')//pulls the tetrominos off the top after beign re-added
           squares[index].style.backgroundColor = ''
         })
-        const squaresRemoved = squares.splice(i, width)
+        const squaresRemoved = squares.splice(i, width) //mutates an array - in this case, taking out a row
         squares = squaresRemoved.concat(squares)
-        squares.forEach(cell => grid.appendChild(cell))
+        squares.forEach(cell => grid.appendChild(cell))//appends removed squares to grid (or else the grid would
+        //appear smaller - as they've been removed through splice)
       }
     }
   }
-
+//splice = remove or add to array
+//splice = attaches to array and lists index nuber of items to remove (1 = remove, 0 = don't remove)
+//
   //game over
   function gameOver() {
     if(current.some(index => squares[currentPosition + index].classList.contains('taken'))) {
