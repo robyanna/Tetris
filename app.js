@@ -66,10 +66,17 @@ console.log(squares)
     [width,width+1,width+2,width+3]
   ]
 
+const xTetromino = [
+[width, width+1, width*2+1, width*2+2],
+[1, width, width+1, width*2],
+[width, width+1, width*2+1, width*2+2],
+[1, width, width+1, width*2]
+]
+
 //Arrays: a variable that can hold more than one value at one time. (rather than single constants for example)
 //can hold many values under a single name and you can access values by referring to an index number
 //
-  const theTetrominoes = [lTetromino, zTetromino, tTetromino, oTetromino, iTetromino] // this variable has the value of the "condensed" tetrimino arrays
+  const theTetrominoes = [lTetromino, zTetromino, tTetromino, oTetromino, iTetromino, xTetromino] // this variable has the value of the "condensed" tetrimino arrays
   // so they'll be have as a group when referenced
 
   let currentPosition = 4 // this variable says that the tetromino will begin at position 4 on the grid
@@ -228,8 +235,8 @@ console.log(squares)
     [0, displayWidth, displayWidth+1, displayWidth*2+1], //zTetromino
     [1, displayWidth, displayWidth+1, displayWidth+2], //tTetromino
     [0, 1, displayWidth, displayWidth+1], //oTetromino
-    [1, displayWidth+1, displayWidth*2+1, displayWidth*3+1] //iTetromino
-
+    [1, displayWidth+1, displayWidth*2+1, displayWidth*3+1], //iTetromino
+    [displayWidth, displayWidth+1, displayWidth*2+1, displayWidth*2+2] //xTetromino
   ]
 
   //display the shape in the mini-grid display
